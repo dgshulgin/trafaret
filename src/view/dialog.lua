@@ -1,3 +1,5 @@
+local dialog = {}
+
 local _context = nil -- локальная копия контекста для использования в виджетах
 
 -- настройки диалогового окна
@@ -20,19 +22,19 @@ local setup = {
 
 -- описание окна
 -- выбор листа данных --
-local lblWorksheet = widgets.Label("Лист данных:", 100, 28)
-lblWorksheet:setAlignment(Forms.Alignment_MiddleCenter)
+local lblWorksheet = widgets.Label("Лист данных:", 80, 28)
+--lblWorksheet:setAlignment(Forms.Alignment_MiddleCenter)
 -- список листов заполняется позднее
-local  cmbWorksheet = widgets.ComboBox(nil, 150, 28)
+local  cmbWorksheet = widgets.ComboBox(nil, 300, 28)
 cmbWorksheet:setOnCurrentItemChanged(function(id)
     setup.wid = id
 end)
 local blockWorksheet = ui:Row{ lblWorksheet, cmbWorksheet }
 
 -- номер строки заголовка --
-local lblHeaderLine = widgets.Label("Строка заголовка:", 150, 28)
-lblHeaderLine:setAlignment(Forms.Alignment_MiddleCenter)
-local textHeaderLine = widgets.TextBox(tostring(setup.header), 100, 28)
+local lblHeaderLine = widgets.Label("Строка заголовка:", 100, 28)
+--lblHeaderLine:setAlignment(Forms.Alignment_MiddleCenter)
+local textHeaderLine = widgets.TextBox(tostring(setup.header), 280, 28)
 textHeaderLine:setOnEditingFinished(function()
     setup.header = tonumber(textHeaderLine:getText())
 end)
@@ -50,9 +52,9 @@ end)
 
 -- выбор файла шаблона --
 local lblTemplate = widgets.Label("Шаблон:", 100, 28)
-lblTemplate:setAlignment(Forms.Alignment_MiddleCenter)
+--lblTemplate:setAlignment(Forms.Alignment_MiddleCenter)
 
-local staticTemplate = widgets.TextBox("Не выбран", 200, 28)
+local staticTemplate = widgets.TextBox("Не выбран", 250, 28)
 staticTemplate:setEnabled(false)
 
 local btnTemplate = widgets.Button("...", 30, 28) --widgets.Button("Выберите документ-шаблон", 380, 28)
@@ -75,10 +77,10 @@ end)
 local groupTemplate = ui:Row{lblTemplate, staticTemplate, btnTemplate}
 
 -- выбор папки для сохранения документа --
-local lblOut = widgets.Label("Итоговые:", 100, 28)
-lblOut:setAlignment(Forms.Alignment_MiddleCenter)
+local lblOut = widgets.Label("Итоговые файлы:", 100, 28)
+--lblOut:setAlignment(Forms.Alignment_MiddleCenter)
 
-local staticOut = widgets.TextBox("Не выбран", 200, 28)
+local staticOut = widgets.TextBox("Не выбран", 250, 28)
 staticOut:setEnabled(false)
 
 local btnFolder = widgets.Button("...", 30, 28)
@@ -106,13 +108,13 @@ cbxBuildPDF:setOnStateChanged(function(state)
 end)
 
 -- открывать целевой каталог после формирования файлов
-local cbxOpenOutFolder = widgets.CheckBox("Открыть папку с созданными файлами", 380, 28)
-cbxOpenOutFolder:setOnStateChanged(function(state)
-    setup.open_out_folder = false
-    if state > 0 then
-        setup.open_out_folder = true
-    end
-end)
+--local cbxOpenOutFolder = widgets.CheckBox("Открыть папку с созданными файлами", 380, 28)
+--cbxOpenOutFolder:setOnStateChanged(function(state)
+--    setup.open_out_folder = false
+--    if state > 0 then
+--        setup.open_out_folder = true
+--    end
+--end)
 
 -- кнопка запуска процесса формирования документов --
 local btnStart = widgets.Button("Сформировать документы", 380, 28)
@@ -138,7 +140,8 @@ ui:Column {
     blockWorksheet, blockHeaderLine, cbxHiddenRows,
     groupTemplate, 
     groupOut,
-    cbxBuildPDF, cbxOpenOutFolder, 
+    cbxBuildPDF, 
+    --cbxOpenOutFolder, 
     ui:Spacer{}, 
     btnStart}}
     --ui:Column {
@@ -173,8 +176,13 @@ function Run(context)
     context.showDialog(mainForm)    
 end
 
-return {
-    id       = "dialog",
-    menuItem = "Сформировать документы",
-    command  = Run,
-}
+
+function dialog.getHandler()
+    return {
+        id       = "dialog",
+        menuItem = "Сформировать документы",
+        command  = Run,
+    }
+end
+
+return dialog

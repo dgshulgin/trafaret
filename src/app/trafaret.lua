@@ -23,8 +23,7 @@ end
 
 function getCommands ()
     local handlers = {}
-    --table.insert(handlers, require("view.dialog").getHandler())
-    table.insert(handlers, require("view.dialog"))
+    table.insert(handlers, require("view.dialog").getHandler())
     return handlers
 end
 

@@ -6,10 +6,10 @@ local manifest = {
     -- имя/наименование разработчика
     vendor = "АНО \"Хаб Знаний МойОфис\"",
 
-    description =   [[Автозаполнение шаблона документа данными из таблицы.]],
+    description =   [[Заполняет шаблон тестового документа испольщуя данные электронной таблицы. Принудительно добавляет логотип Хаб Знаний в нижний колонтитул первого листа.]],
     
     apiVersion = {major=1, minor=0},
-    extensionVersion = {major=1, minor=0, patch=0, build=""},
+    extensionVersion = {major=1, minor=1, patch=0, build=""},
     applicationId = {"MyOffice Spreadsheet"},
     
     fallbackLanguage = "ru",
